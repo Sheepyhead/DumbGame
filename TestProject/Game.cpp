@@ -9,21 +9,25 @@ using namespace sheepy::engine;
 
 Game::Game() {
 
-    long previous = getCurrentTime();
-    double lag = 0.0;
+    auto previous = getCurrentTime();
+    auto lag = 0.0;
     while (true) {
-        long current = getCurrentTime();
-        long deltaTime = current - previous;
-        previous = current; {
-            std::cout << "There is lag: " << lag << std::endl;
-            update();
-            lag += deltaTime;
+        auto current = getCurrentTime();
+        auto sinceLast = current - previous;
+        auto deltaTime = (std::chrono::duration_cast<std::chrono::nanoseconds>(sinceLast)) / 1000.0;
 
-            while (lag >= MS_PER_UPDATE)
-            lag -= MS_PER_UPDATE;
+        previous = current;
+        lag += deltaTime.count();
+
+        while (lag >= MS_PER_UPDATE)
+        {
+            update();
+
+            // Clamp lag to be min 0
+            lag -= MS_PER_UPDATE == 0 ? 0 : lag;
         }
 
-        draw();
+        draw(static_cast<const long>(lag / MS_PER_UPDATE));
     }
 }
 
@@ -31,14 +35,19 @@ Game::~Game() {
 
 }
 
-long Game::getCurrentTime() {
-    return std::chrono::system_clock::now().time_since_epoch().count();
+std::chrono::high_resolution_clock::time_point Game::getCurrentTime() {
+    return std::chrono::high_resolution_clock::now();
 }
 
 void Game::update() {
+
 }
 
-void Game::draw() {
-    std::cout << "Draw called" << std::endl;
+void Game::draw(long frameRatio) {
+
 }
 
+int main() {
+    sheepy::engine::Game game {};
+    return 0;
+}

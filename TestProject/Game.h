@@ -8,6 +8,7 @@
 #include <iostream>
 #include <cstdio>
 #include <CImg.h>
+#include <chrono>
 
 namespace sheepy {
 namespace engine {
@@ -16,22 +17,20 @@ public:
     Game();
     ~Game();
 
-    // Pure virtual methods
+    // Game loop methods
     void update();
-    void draw();
+    void draw(const long frameRatio);
 
 private:
     //Internal methods
-    long getCurrentTime();
+    std::chrono::time_point<std::chrono::_V2::system_clock, std::chrono::duration<int64_t, std::ratio<1, 1000000000>>>
+    getCurrentTime();
+
+
     const int fps = 60;
     const double MS_PER_UPDATE = 100.0/fps;
 };
 }
-}
-
-int main() {
-    sheepy::engine::Game game {};
-    return 0;
 }
 
 
