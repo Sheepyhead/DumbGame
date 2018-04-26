@@ -11,6 +11,8 @@
 class TestGame : public sheepy::engine::Game {
 
 public:
+    TestGame();
+    ~TestGame();
 };
 
 

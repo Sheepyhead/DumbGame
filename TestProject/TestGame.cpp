@@ -4,3 +4,11 @@
 
 #include "TestGame.h"
 #include <iostream>
+
+TestGame::TestGame() {
+
+}
+
+TestGame::~TestGame() {
+
+}

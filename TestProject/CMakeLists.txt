@@ -6,7 +6,7 @@ project (TestProject)
 
 include_directories(C:/include/CImg-2.2.2)
 
-ADD_LIBRARY(LibsModule Game.cpp Game.h)
+ADD_LIBRARY(LibsModule Game.cpp Game.h GameObject.h BaseGameObject.cpp BaseGameObject.h)
 
 target_link_libraries(LibsModule -lpthread)
 target_link_libraries(LibsModule -lm)

@@ -9,6 +9,9 @@
 #include <cstdio>
 #include <CImg.h>
 #include <chrono>
+#include <vector>
+#include <memory>
+#include "GameObject.h"
 
 namespace sheepy {
 namespace engine {
@@ -19,7 +22,10 @@ public:
 
     // Game loop methods
     void update();
-    void draw(const long frameRatio);
+    void draw(long frameRatio);
+
+    // Game API
+    void addGameObject(GameObject&& object);
 
 private:
     //Internal methods
@@ -29,7 +35,12 @@ private:
 
     const int fps = 60;
     const double MS_PER_UPDATE = 100.0/fps;
+    std::vector<GameObject&&> objects;
+
+    void initialize();
 };
+
+extern cimg_library::CImgDisplay mainCanvas;
 }
 }
 

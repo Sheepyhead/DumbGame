@@ -8,6 +8,7 @@
 using namespace sheepy::engine;
 
 Game::Game() {
+    initialize();
 
     auto previous = getCurrentTime();
     auto lag = 0.0;
@@ -32,7 +33,6 @@ Game::Game() {
 }
 
 Game::~Game() {
-
 }
 
 std::chrono::high_resolution_clock::time_point Game::getCurrentTime() {
@@ -40,14 +40,32 @@ std::chrono::high_resolution_clock::time_point Game::getCurrentTime() {
 }
 
 void Game::update() {
-
+    for (auto &object : objects) {
+        object.update();
+    }
 }
 
 void Game::draw(long frameRatio) {
+    for (auto &object : objects) {
+        object.draw(frameRatio);
+    }
+}
 
+void Game::initialize() {
+
+}
+
+void Game::addGameObject(GameObject&& object) {
+    objects.push_back(object);
 }
 
 int main() {
     sheepy::engine::Game game {};
     return 0;
+}
+
+namespace sheepy {
+namespace engine {
+cimg_library::CImgDisplay mainCanvas{};
+}
 }
